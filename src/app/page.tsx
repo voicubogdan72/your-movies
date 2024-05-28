@@ -1,5 +1,10 @@
+"use client";
+import CardHoverEffectDemo from "@/components/card/CardMovies";
+import CustomModal from "@/components/global/custom-modal";
+import WorkflowButton from "@/components/global/workflow-button";
 import Menu from "@/components/menu";
 import MoviesCard from "@/components/MoviesCard";
+import { SignOutButton } from "@clerk/nextjs";
 async function GetWhatMovieIsPlaying() {
   const url = "https://api.themoviedb.org/3/movie/now_playing";
   const response = await fetch(url, {
@@ -51,7 +56,8 @@ const Root = async () => {
           Get started
         </a>
       </div>
-      <MoviesCard result={data.results} />
+
+      <CardHoverEffectDemo result={data.results} />
     </div>
   );
 };

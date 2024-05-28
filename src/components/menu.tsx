@@ -1,34 +1,106 @@
+// import Image from "next/image";
+// import Link from "next/link";
+// import React from "react";
+// import { MenuIcon } from "lucide-react";
+// import { UserButton, currentUser } from "@clerk/nextjs";
+
+// const Menu = async () => {
+//   const user = await currentUser();
+//   return (
+//     <header className="fixed right-0 left-0 top-0 py-4 px-4 bg-black/40 backdrop-blur-lg z-[100] flex items-center border-b-[1px] border-neutral-900 justify-between">
+//       <aside className="flex items-center gap-[2px]">
+//         <p className="text-3xl font-bold">Your</p>
+//         movie
+//       </aside>
+//       <nav className="absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] hidden md:block">
+//         <ul className="flex items-center gap-4 list-none">
+//           <li>
+//             <Link href="/add-movie">Add movie</Link>
+//           </li>
+//           <li>
+//             <Link href="/">See reviews</Link>
+//           </li>
+//           <li>
+//             <Link href="/your-movies">Your list</Link>
+//           </li>
+//           <li>
+//             <Link href="/">Home</Link>
+//           </li>
+//           {/* <li>
+//             <Link href="#">Resources</Link>
+//           </li>
+//           <li>
+//             <Link href="#">Documentation</Link>
+//           </li>
+//           <li>
+//             <Link href="#">Enterprise</Link>
+//           </li> */}
+//         </ul>
+//       </nav>
+//       <aside className="flex items-center gap-4">
+//         <Link
+//           href="/dashboard"
+//           className="relative inline-flex h-10 overflow-hidden rounded-full p-[2px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+//         >
+//           <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+//           <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+//             {user ? "Dashboard" : "Get Started"}
+//           </span>
+//         </Link>
+//         {user ? <UserButton afterSignOutUrl="/" /> : null}
+//         <MenuIcon className="md:hidden" />
+//       </aside>
+//     </header>
+//   );
+// };
+
+// export default Menu;
+"use client"; // Ensure this is a client-side component
+
+import Link from "next/link";
 import React from "react";
-import { MdModeStandby } from "react-icons/md";
+import { Menu as MenuIcon } from "lucide-react";
+import { useUser, UserButton } from "@clerk/nextjs";
 
 const Menu = () => {
-  const menu = [
-    { name: "Home", url: "#home" },
-    { name: "Sign-up", url: "#services" },
-    { name: "Login", url: "#map" },
-    { name: "Adauga-film", url: "#price" },
-    { name: "Contact", url: "#contact" },
-  ];
+  const { isLoaded, user } = useUser();
 
   return (
-    <nav className="ml-0 fixed z-10">
-      <ul className="list-disc flex flex-col gap-5 fixed right-0 top-0 bottom-0 justify-center sm:m-10 m-3 ">
-        {menu.map((x, index) => (
-          <a
-            href={x.url}
-            key={index}
-            className="flex items-center flex-row-reverse group "
-          >
-            <MdModeStandby className="sm:text-4 xl text-2xl text-primary group-hover:text-accent  transition-all ease-in-out duration-700  sm:ml-5  flex-shrink-0" />
-            <p
-              className={`opacity-0 group-hover:opacity-100 transition duration-700  text-2xl mr-3 font-bold uppercase`}
-            >
-              {x.name}
-            </p>
-          </a>
-        ))}
-      </ul>
-    </nav>
+    <header className="fixed right-0 left-0 top-0 py-4 px-4 bg-black/40 backdrop-blur-lg z-[100] flex items-center border-b-[1px] border-neutral-900 justify-between">
+      <aside className="flex items-center gap-[2px]">
+        <p className="text-3xl font-bold">Your</p>
+        <span>movie</span>
+      </aside>
+      <nav className="absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] hidden md:block">
+        <ul className="flex items-center gap-4 list-none">
+          <li>
+            <Link href="/add-movie">Add movie</Link>
+          </li>
+          <li>
+            <Link href="/">See reviews</Link>
+          </li>
+          <li>
+            <Link href="/your-movies">Your list</Link>
+          </li>
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+        </ul>
+      </nav>
+      <aside className="flex items-center gap-4">
+        <Link
+          href="/dashboard"
+          className="relative inline-flex h-10 overflow-hidden rounded-full p-[2px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+        >
+          <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+            {isLoaded && user ? "Dashboard" : "Get Started"}
+          </span>
+        </Link>
+        {isLoaded && user ? <UserButton afterSignOutUrl="/" /> : null}
+        <MenuIcon className="md:hidden" />
+      </aside>
+    </header>
   );
 };
 
