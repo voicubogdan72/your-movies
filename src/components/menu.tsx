@@ -1,15 +1,15 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
 import { Menu as MenuIcon } from "lucide-react";
 import { useUser, UserButton } from "@clerk/nextjs";
+import { useState } from "react";
 
 const Menu = () => {
   const { isLoaded, user } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsMenuOpen((prevState) => !prevState);
   };
 
   return (
@@ -18,8 +18,34 @@ const Menu = () => {
         <p className="text-3xl font-bold">Your</p>
         <span>movie</span>
       </aside>
-      <nav className={`md:block ${isMenuOpen ? "block" : "hidden"}`}>
-        <ul className="flex flex-col md:flex-row items-center gap-4 list-none">
+      <nav className="md:hidden">
+        <MenuIcon
+          className="text-white dark:text-gray-300 cursor-pointer"
+          onClick={toggleMenu}
+        />
+      </nav>
+      <nav
+        className={`absolute left-0 top-full w-full bg-black/40 ${
+          isMenuOpen ? "block" : "hidden"
+        } md:hidden`}
+      >
+        <ul className="flex flex-col items-center gap-4 list-none py-4">
+          <li>
+            <Link href="/add-movie">Add movie</Link>
+          </li>
+          <li>
+            <Link href="/">See reviews</Link>
+          </li>
+          <li>
+            <Link href="/your-movies">Your list</Link>
+          </li>
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+        </ul>
+      </nav>
+      <nav className="hidden md:block">
+        <ul className="flex items-center gap-4 list-none">
           <li>
             <Link href="/add-movie">Add movie</Link>
           </li>
@@ -45,7 +71,6 @@ const Menu = () => {
           </span>
         </Link>
         {isLoaded && user ? <UserButton afterSignOutUrl="/" /> : null}
-        <MenuIcon className="md:hidden cursor-pointer" onClick={toggleMenu} />
       </aside>
     </header>
   );
