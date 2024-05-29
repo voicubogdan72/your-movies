@@ -24,7 +24,7 @@ const Root = async () => {
 
   return (
     <div>
-      <Menu />
+      {/* <Menu /> */}
       <div className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 py-20 bg-gradient-to-r from-gray-600/50 via-gray-700 to-gray-600/50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800">
         <a
           href=""
@@ -32,7 +32,7 @@ const Root = async () => {
         >
           Forget what movie do you watched
         </a>
-        <h1 className="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-white-300 dark:text-gray-300 sm:text-7xl">
+        <h1 className="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-white-300 dark:text-gray-300 sm:text-6xl md:text-7xl">
           Share your opinion
           <span className="relative whitespace-nowrap text-orange-500 dark:text-orange-300">
             <svg
@@ -46,16 +46,11 @@ const Root = async () => {
             <span className="relative">with Your Movies</span>
           </span>
         </h1>
-        <h2 className="mx-auto mt-12 max-w-xl text-lg sm:text-white-400 text-white-500 dark:text-gray-300 leading-7">
+        <h2 className="mx-auto mt-8 md:mt-12 max-w-xl text-lg sm:text-white-400 text-white-500 dark:text-gray-300 leading-7">
           Track Your Movie Journey: Log, Rate, Reflect.
         </h2>
-        <a
-          className="bg-orange-600 dark:bg-gray-800 rounded-xl text-white dark:text-gray-300 font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-orange-500 dark:hover:bg-gray-600 transition"
-          href=""
-        >
-          Get started
-        </a>
       </div>
+
       <div className="flex items-center justify-center  w-full">
         <h2 className="text-2xl sm:text-3xl text-white-500 dark:text-gray-300 leading-7">
           What is being broadcast now
