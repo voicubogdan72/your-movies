@@ -56,6 +56,11 @@ const Root = async () => {
           Get started
         </a>
       </div>
+      <div className="flex items-center justify-center  w-full">
+        <h2 className="text-2xl sm:text-3xl text-white-500 dark:text-gray-300 leading-7">
+          What is being broadcast now
+        </h2>
+      </div>
 
       <CardHoverEffectDemo result={data.results} />
     </div>

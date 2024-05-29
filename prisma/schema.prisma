@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,15 +7,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model WatchedMovies {
+  id            Int       @id @default(autoincrement())
+  title         String    @unique
+  genre         String
+  daySaw        DateTime?
+  mainCharacter String?
+  filmDirector  String?
+  review        String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_t")
+  filmScore     Int?
+}
 
-model whatchedMovies {
-    id        String     @default(cuid()) @id
-    title String
-    genre String
-    daySaw DateTime?
-    mainCharacter String?
-    filmDirector String?
-    review String?
-    createdAt     DateTime  @default(now()) @map(name: "created_at")
-    updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+model User {
+  id             Int    @id @default(autoincrement())
+  userId         String
+  watchedMovieId Int
 }

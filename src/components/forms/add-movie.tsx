@@ -1,15 +1,70 @@
 "use client";
-import React from "react";
+
+import React, { ChangeEvent, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
+import notifyError from "../notify/errorNotify";
+import notify from "../notify/succesNotify";
 
-const AddMovieForm = () => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+const AddMovieForm = (userId: any) => {
+  const [formData, setFormData] = useState({
+    title: "",
+    genre: "",
+    daySaw: "",
+    mainCharacter: "",
+    filmDirector: "",
+    review: "",
+    filmScore: 0,
+    userId: userId.userId,
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted");
+    setLoading(true);
+    setFormData({
+      title: "",
+      genre: "",
+      daySaw: "",
+      mainCharacter: "",
+      filmDirector: "",
+      review: "",
+      filmScore: 0,
+      userId: userId.userId,
+    });
+    try {
+      const res = await fetch("/api/add-movie", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setLoading(false);
+      if (!res.ok) {
+        setError((await res.json()).message);
+        notifyError("Error added the movie!");
+        return;
+      } else {
+        notify("Movie was added!");
+      }
+    } catch (error: any) {
+      setLoading(false);
+      setError(error);
+    }
   };
+
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+
+    setFormData({ ...formData, [name]: value });
+  };
+
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
@@ -19,35 +74,86 @@ const AddMovieForm = () => {
         Add the movie you watched
       </p>
 
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-8" onSubmit={onSubmit}>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
-            <Label htmlFor="firstname">Title of movie</Label>
-            <Input id="firstname" placeholder="Tyler" type="text" />
+            <Label htmlFor="title">Title of movie</Label>
+            <Input
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="Tyler"
+              type="text"
+            />
           </LabelInputContainer>
           <LabelInputContainer>
-            <Label htmlFor="lastname">Genre</Label>
-            <Input id="lastname" placeholder="Horror" type="text" />
+            <Label htmlFor="genre">Genre</Label>
+            <Input
+              id="genre"
+              name="genre"
+              value={formData.genre}
+              onChange={handleChange}
+              placeholder="Horror"
+              type="text"
+            />
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
-          <Label htmlFor="theDay">The day you saw him</Label>
-          <Input id="theDay" placeholder="01-01-2024" type="date" />
+          <Label htmlFor="daySaw">The day you saw him</Label>
+          <Input
+            id="daySaw"
+            name="daySaw"
+            value={formData.daySaw}
+            onChange={handleChange}
+            placeholder="01-01-2024"
+            type="date"
+          />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="mainCharacter">Main Character</Label>
-          <Input id="mainCharacter" placeholder="Bogdan Voicu" type="text" />
+          <Input
+            id="mainCharacter"
+            name="mainCharacter"
+            value={formData.mainCharacter}
+            onChange={handleChange}
+            placeholder="Bogdan Voicu"
+            type="text"
+          />
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <Label htmlFor="filmDirector">Film Director</Label>
-          <Input id="filmDirctor" placeholder="Quentin Tarantino" type="text" />
+          <Input
+            id="filmDirector"
+            name="filmDirector"
+            value={formData.filmDirector}
+            onChange={handleChange}
+            placeholder="Quentin Tarantino"
+            type="text"
+          />
         </LabelInputContainer>
 
         <LabelInputContainer className="mb-8">
-          <Label htmlFor="filmDirector">Your opinions</Label>
+          <Label htmlFor="review">Your opinions</Label>
           <Textarea
-            id="overview"
+            id="review"
+            name="review"
+            value={formData.review}
+            onChange={handleChange}
             placeholder="What do you think about the movie"
+          />
+        </LabelInputContainer>
+        <LabelInputContainer className="mb-8">
+          <Label htmlFor="filmScore">Film Score</Label>
+          <Input
+            type="number"
+            min={1}
+            max={10}
+            id="filmScore"
+            name="filmScore"
+            value={formData.filmScore}
+            onChange={handleChange}
+            placeholder="rate the movie between 1-10"
           />
         </LabelInputContainer>
 

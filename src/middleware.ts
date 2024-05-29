@@ -1,7 +1,7 @@
 import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
-  publicRoutes: ["/"],
+  publicRoutes: ["/", "/api/add-movie"],
   ignoredRoutes: [
     "/api/auth/callback/discord",
     "/api/auth/callback/notion",
@@ -14,9 +14,3 @@ export default authMiddleware({
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
-
-// https://www.googleapis.com/auth/userinfo.email
-// https://www.googleapis.com/auth/userinfo.profile
-// https://www.googleapis.com/auth/drive.activity.readonly
-// https://www.googleapis.com/auth/drive.metadata
-// https://www.googleapis.com/auth/drive.readonly
