@@ -4,10 +4,11 @@ import { currentUser } from "@clerk/nextjs";
 import React, { use } from "react";
 
 async function GetMoviesByUserId(userId: any) {
-  const urlProd = process.env.AWS_URL;
-  const urlGet = `${urlProd}/api/get-movies-by-userId?userId=${userId}`;
+  // const urlProd = process.env.AWS_URL;
+  // const urlGet = `${urlProd}/api/get-movies-by-userId?userId=${userId}`;
   //const url = `http://localhost:3000/api/get-movies-by-userId?userId=${userId}`;
-  const response = await fetch(urlGet, {
+  const url = `https://main.d2ud28k8tmru19.amplifyapp.com/api/get-movies-by-userId?userId=${userId}`;
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       accept: "application/json",
