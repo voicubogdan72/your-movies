@@ -1,7 +1,7 @@
 import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
-  publicRoutes: ["/", "/api/add-movie"],
+  publicRoutes: ["/", "/api/add-movie", "/api/get-movies-by-userId"],
   ignoredRoutes: [
     "/api/auth/callback/discord",
     "/api/auth/callback/notion",
