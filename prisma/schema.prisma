@@ -9,7 +9,7 @@ datasource db {
 
 model WatchedMovies {
   id            Int       @id @default(autoincrement())
-  title         String    @unique
+  title         String    
   genre         String
   daySaw        DateTime?
   mainCharacter String?
@@ -18,10 +18,9 @@ model WatchedMovies {
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_t")
   filmScore     Int?
+  userId        String
+
+  @@unique([title, userId])
 }
 
-model User {
-  id             Int    @id @default(autoincrement())
-  userId         String
-  watchedMovieId Int
-}
+

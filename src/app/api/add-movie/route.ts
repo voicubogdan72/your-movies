@@ -40,24 +40,25 @@ export async function POST(req: NextRequest) {
         filmDirector: filmDirector || null,
         review: review || null,
         filmScore: Number(filmScore),
+        userId,
       },
     });
-    if (newMovieWatched) {
-      try {
-        await prisma.user.create({
-          data: {
-            userId,
-            watchedMovieId: newMovieWatched.id,
-          },
-        });
-      } catch (e: any) {
-        console.log(e);
-        return NextResponse.json(
-          { message: "Internal Server Error" },
-          { status: 500 }
-        );
-      }
-    }
+    // if (newMovieWatched) {
+    //   try {
+    //     await prisma.user.create({
+    //       data: {
+    //         userId,
+    //         watchedMovieId: newMovieWatched.id,
+    //       },
+    //     });
+    //   } catch (e: any) {
+    //     console.log(e);
+    //     return NextResponse.json(
+    //       { message: "Internal Server Error" },
+    //       { status: 500 }
+    //     );
+    //   }
+    // }
 
     return NextResponse.json({
       message: "Added Movie",
