@@ -36,7 +36,6 @@ const YourMovies = async () => {
     return <NoMoviesMessage />;
   }
   const data = await GetMoviesByUserId(user.id);
-  console.log(data.movies);
 
   if (!data || !data.movies || data.movies.length === 0) {
     return <NoMoviesMessage />;
